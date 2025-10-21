@@ -7,7 +7,6 @@
     
     <!-- Your New Ad Code -->
 <script src='//libtl.com/sdk.js' data-zone='10073338' data-sdk='show_10073338'></script>
-    
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -123,7 +122,8 @@
                     <h3 class="font-semibold mb-3">Withdraw Earnings</h3>
                     <p class="text-sm text-gray-400 mb-1">Current Balance: <span class="font-bold text-accent"><span id="wallet-coin-balance">0</span> Coins</span></p>
                     <p class="text-sm text-gray-400 mb-2">Minimum Withdrawal: <span id="min-withdrawal-info">...</span> Coins</p>
-                    <p class="text-sm text-gray-400 mb-4 font-semibold" id="coin-value-info">...</p>
+                   <p class="text-sm text-gray-400 mb-4 font-semibold" id="coin-value-info">.....:৳ 100 BDT</p>
+
                     <input id="withdraw-amount" type="number" placeholder="Enter coin amount" class="w-full p-3 rounded-lg input-field mb-3">
                     <select id="withdraw-method" class="w-full p-3 rounded-lg input-field mb-3"></select>
                     <div id="payment-details-container"></div>
@@ -556,7 +556,15 @@
         }
         
         function shareReferralCode() {
-            
+            const text = `Join CashReward and earn money! Use my referral code to get a bonus: ${userData.referralCode}`;
+            if (navigator.share) {
+                navigator.share({ title: 'Join CashReward!', text: text, url: window.location.href })
+                    .catch((error) => console.error("Share failed:", error));
+            } else {
+                copyReferralCode();
+                showAlert("Share feature is not available. Referral code has been copied instead!");
+            }
+        }
 
         window.claimReward = async function(taskType) {
             const today = new Date().toISOString().split('T')[0];
